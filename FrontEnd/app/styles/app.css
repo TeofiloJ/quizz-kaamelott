@@ -1,0 +1,82 @@
+.chapter-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.valideChapters{
+    margin: 3vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.errorMsg{
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.chapter{
+    flex: 0 1 auto;
+    margin: 5px;
+    position: relative;
+    /* justify-content: center; */
+    /* margin: 5px; 
+    border: 5px solid #a9a9a9;
+    border-radius: 40px;
+    background-color: #CCCCCC; */
+}
+
+.bookImg{
+    width:  264px;
+    height: 384px;
+    border: 4px solid #000000;
+    /* border: 5px solid #a9a9a9; */
+    border-radius: 40px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background: rgba(0, 0, 0, 0.5);
+    border: 4px solid #000000;
+    /* border: 5px solid #a9a9a9; */
+    border-radius: 40px;
+    
+}
+
+
+.text {
+    color: white;
+    font-size: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.chapter:hover .overlay {
+opacity: 1;
+}
+
+.selected{
+    opacity: 1 !important;
+    border: 8px double #ffffff !important;
+}

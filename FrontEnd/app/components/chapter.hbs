@@ -1,0 +1,7 @@
+<div class="chapter" {{on 'click' this.onClickEvent}}>
+    <img src={{@imageLink}} class="bookImg" >
+    <div class={{if this.isSelected "overlay selected" "overlay"}} >
+        <span class="text">{{@numeroLivre}}</span>
+    </div>
+</div>
+{{yield}}
