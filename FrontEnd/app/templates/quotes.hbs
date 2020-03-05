@@ -2,21 +2,21 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h2>Liste des citations:</h2>
+            <h1>Liste des citations:</h1>
         </div>
     </div>
       
     {{#each @model as |quote|}}
-        <div class="row mt-2">
+        <div class="row quote-row mt-2">
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        Quote
+                        Citation #{{quote.id}}
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                        <p>{{quote.text}}</p>
+                        <footer class="blockquote-footer">{{quote.character}} (<cite title="Source Title">{{quote.season}} épisode {{quote.episode}}).</cite></footer>
                         </blockquote>
                     </div>
                 </div>
