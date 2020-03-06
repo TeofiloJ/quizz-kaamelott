@@ -64,6 +64,14 @@ const quoteService = { findAll: () => quote };
           .expect(quoteService.findAll());
 
       });
+      it(`/GET quotes TODO start here`, () => {
+        return request(app.getHttpServer())
+          .get('/quotes?filter%5Bseasons%5D=1%2C2')
+          .expect(200)
+          .expect(quoteService.findAll());
+
+      });
+     
       
        afterAll(async () => {
         await app.close();
