@@ -18,11 +18,11 @@ def allKeysArePresent(quote):
     return keysArePresent
 
 with open('kaamelott.json', 'r') as INPUT:
-    data = {"quotes": []}
+    data = []
     quotes = json.load(INPUT)
     for id in quotes:
         if allKeysArePresent(quotes[id]):
-            data['quotes'].append({
+            data.append({
                 'id': id,
                 'text': quotes[id]['citation'],
                 'actor': quotes[id]['infos']['acteur'],
