@@ -1,0 +1,21 @@
+
+<div class="chapter-list">
+    <Chapter @id="1" @numeroLivre="I" @imageLink="Livre_1.png" @updateMultiple={{this.updateMultiple}}></Chapter>
+    <Chapter @id="2" @numeroLivre="II" @imageLink="Livre_2.png"  @updateMultiple={{this.updateMultiple}} ></Chapter>
+    <Chapter @id="3" @numeroLivre="III" @imageLink="Livre_3.png"  @updateMultiple={{this.updateMultiple}}></Chapter>
+</div>
+
+<div class="chapter-list">
+    <Chapter @id="4" @numeroLivre="IV" @imageLink="Livre_4.png" @updateMultiple={{this.updateMultiple}}></Chapter>
+    <Chapter @id="5" @numeroLivre="V" @imageLink="Livre_5.png" @updateMultiple={{this.updateMultiple}}></Chapter>
+    <Chapter @id="6" @numeroLivre="VI" @imageLink="Livre_6.png" @updateMultiple={{this.updateMultiple}}></Chapter>
+</div>
+
+<div class="valideChapters">
+    {{!-- <LinkTo @route="quizz" @query={{hash tomes=this.selected}}>Validate</LinkTo> --}}
+    <button {{on 'click' this.validateForm}}>Valider</button>
+    <span class="errorMsg">{{this.errorMessage}}</span>
+</div>
+
+
+{{outlet}}
