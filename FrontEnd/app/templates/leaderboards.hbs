@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Tableau des scores:</h1>
+        </div>
+    </div>
+      
+       {{#each @model as |leaderboard|}}
+        <div class="row quote-row mt-2">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        Name #{{leaderboard.name}}
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                        <p>{{leaderboard.score}}</p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+
+    
+
+</div>
+
