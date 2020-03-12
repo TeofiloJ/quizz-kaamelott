@@ -19,7 +19,7 @@ export class LeaderboardService{
     
       async findAll(): Promise<any> {
         var leaderboardsSerializer = new JSONAPISerializer('leaderboards', {
-          attributes: ['name', 'score']
+          attributes: ['id', 'name', 'score']
         });
         const db =  this.leaderboardModel
             .find({},{'_id':0,'__v':0})

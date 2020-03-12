@@ -1,4 +1,5 @@
 export interface Leaderboard extends Document {
+    readonly id: Number
     readonly name: String,
-    score: Number
+    score: number
 }
