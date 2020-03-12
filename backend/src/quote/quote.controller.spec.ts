@@ -6,33 +6,44 @@ import { QuoteSchema } from "./quote.schema";
 import { INestApplication } from "@nestjs/common";
 import * as request from 'supertest';
 import { QuoteModule } from "./quote.module";
-
-
-
-
-describe('QuoteController', () => {
-  const quote = {
-    "data": [
-      {
-        "type": "quotes",
-        "id": "1",
-        "attributes": {
-          "character": "string",
-          "text": "string",
-          "actor": "string",
-          "author": "string",
-          "season": "string",
-          "episode": "string"
-        }
-      }
-    ]
-  }
- 
-
-const quoteService = { findAll: () => quote };
+var mongoose = require('mongoose')
+const FactoryGirl = require('factory-girl');
+const factory = FactoryGirl.factory;
+describe('QuoteController',  () => {
+  
+  var Quote = mongoose.model('Quote',QuoteSchema)
+   factory.define('Quote', Quote, {
+    id: factory.sequence('id', (n) => n),
+    text:  factory.chance('sentence'),
+    actor:  factory.chance('name'),
+    author:  factory.chance('name'),
+    season:  factory.sequence('season', (n) => `season_${n}`),
+    episode:  factory.sequence('episode', (n) => `episode${n}`),
+    character:   factory.chance('name'),
+  });
 
     let app: INestApplication;
+    let quoteService;
     beforeAll(async() => {
+      const quote = await factory.build('Quote').then( quoteGenerate =>{
+        return {
+          "data": [
+            {
+              "type": "quotes",
+              "id": quoteGenerate.id,
+              "attributes": {
+                "character": quoteGenerate.character,
+                "text": quoteGenerate.text,
+                "actor": quoteGenerate.actor,
+                "author": quoteGenerate.author,
+                "season": quoteGenerate.season,
+                "episode": quoteGenerate.episode
+              }
+            }
+          ]
+        }
+      })
+      quoteService = { findAll: () => quote };
       const moduleRef: TestingModule = await Test.createTestingModule({
         controllers: [
           QuoteController
@@ -42,7 +53,6 @@ const quoteService = { findAll: () => quote };
           MongooseModule.forRoot('mongodb://localhost:27017/quote'),
           MongooseModule.forFeature([{ name: 'quote', schema: QuoteSchema }])
         ]
-      
       })  
       .overrideProvider(QuoteService)
       .useValue(quoteService)
@@ -68,6 +78,7 @@ const quoteService = { findAll: () => quote };
        afterAll(async () => {
         await app.close();
       });
+    
     });
   
 

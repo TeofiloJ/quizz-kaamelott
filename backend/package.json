@@ -26,6 +26,7 @@
     "@nestjs/mongoose": "^6.3.1",
     "@nestjs/platform-express": "^6.10.14",
     "@nestjs/swagger": "^4.3.2",
+    "factory-girl": "^5.0.4",
     "fastify-swagger": "^2.5.0",
     "jsonapi-serializer": "^3.6.6",
     "mongoose": "^5.9.3",
