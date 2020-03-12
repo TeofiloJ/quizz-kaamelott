@@ -1,0 +1,47 @@
+import { Injectable, Inject } from "@nestjs/common";
+import { Leaderboard } from "./leaderboard.interface";
+import { LeaderboardCreateDto } from "./leaderboard.dto";
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+var JSONAPISerializer = require('jsonapi-serializer').Serializer;
+
+@Injectable()
+export class LeaderboardService{
+  
+    constructor(
+        @InjectModel('leaderboard') private readonly leaderboardModel: Model<Leaderboard>) {}
+
+      async create(dto: LeaderboardCreateDto): Promise<Leaderboard> {
+        dto.score = Math.floor(dto.score * 683)
+        const createdLeaderboard = new this.leaderboardModel(dto);
+        return createdLeaderboard.save();
+      }
+    
+      async findAll(): Promise<any> {
+        var leaderboardsSerializer = new JSONAPISerializer('leaderboards', {
+          attributes: ['name', 'score']
+        });
+        const db =  this.leaderboardModel
+            .find({},{'_id':0,'__v':0})
+            .exec();
+        console.log(db)
+        return db.then( result => { return  leaderboardsSerializer.serialize(result)
+        })
+        
+      }
+
+      async findTopTen(): Promise<any> {
+        var leaderboardsSerializer = new JSONAPISerializer('leaderboards', {
+          attributes: ['name', 'score']
+        });
+        const db =  this.leaderboardModel
+            .find({},{'_id':0,'__v':0})
+            .limit(10)
+            .sort({ score: -1 })
+            .exec();
+        console.log(db)
+        return db.then( result => { return  leaderboardsSerializer.serialize(result)
+        })
+        
+      }
+}
