@@ -7,23 +7,6 @@ import { INestApplication } from "@nestjs/common";
 import * as request from 'supertest';
 
 describe('QuoteController', () => {
-  const quote = {
-    "data": [
-      {
-        "type": "quotes",
-        "id": "1",
-        "attributes": {
-          "character": "string",
-          "text": "string",
-          "actor": "string",
-          "author": "string",
-          "season": "string",
-          "episode": "string"
-        }
-      }
-    ]
-  }
-  const quoteService = { findAll: () => quote };
 
   let app: INestApplication;
 
@@ -34,13 +17,11 @@ describe('QuoteController', () => {
       ],
       providers: [QuoteService],
       imports: [
-        MongooseModule.forRoot('mongodb://localhost:27017/quote'),
+        MongooseModule.forRoot('mongodb://localhost:27017/kaamelott-test'),
         MongooseModule.forFeature([{ name: 'quote', schema: QuoteSchema }])
       ]
     
     })  
-    .overrideProvider(QuoteService)
-    .useValue(quoteService)
     .compile();
   
     app = moduleRef.createNestApplication();
@@ -51,9 +32,32 @@ describe('QuoteController', () => {
       return request(app.getHttpServer())
         .get('/quotes')
         .expect(200)
-        .expect(quoteService.findAll());
+        .expect(
+          res => {
+            expect(res.body.data.length > 0).toBe(true)
+          }
+      );
 
   });
+
+  it(`/POST quotes`, () => {
+    return request(app.getHttpServer())
+        .post('/leaderboards')
+        .send({
+          "character": "Arthur",
+          "text": "string",
+          "actor": "string",
+          "author": "string",
+          "season": "string",
+          "episode": "string"
+        })
+        .expect(201)
+        .expect(
+            res => {
+                expect(res.body.character).toBe("Arthur")
+            }
+        );
+});
     
   afterAll(async () => {
     await app.close();

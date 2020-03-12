@@ -17,4 +17,4 @@ export class QuoteController {
     async create(@Body()  dto : QuoteCreateDto){
         return this.quoteService.create(dto)
     }
-    }
+}

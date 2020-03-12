@@ -9,51 +9,6 @@ import * as request from 'supertest';
 
 describe('LeaderboardController', () => {
 
-    const leaderboardDto = {
-        "name": "Foo Bar",
-        "score": "683"
-    }
-
-    const leaderboard = {
-        "data": [
-        {
-            "type": "leaderboards",
-            "id": "1",
-            "attributes": {
-            "name": "Foo Bar",
-            "score": "683",
-            }
-        }
-        ]    
-    }
-
-    const leaderboardOrdered = {
-        "data": [
-        {
-            "type": "leaderboards",
-            "id": "1",
-            "attributes": {
-            "name": "Foo Bar",
-            "score": "1366",
-            }
-        },
-        {
-            "type": "leaderboards",
-            "id": "1",
-            "attributes": {
-            "name": "Foo Bar",
-            "score": "683",
-            }
-        }
-        ]    
-    }
-
-    const leaderboardService = { 
-        create: () => leaderboard,
-        findAll: () => leaderboard,
-        findTopTen:() => leaderboardOrdered
-    };
-
     let app: INestApplication;
 
     beforeAll(async() => {
@@ -63,13 +18,11 @@ describe('LeaderboardController', () => {
         ],
         providers: [LeaderboardService],
         imports: [
-            MongooseModule.forRoot('mongodb://localhost:27017/leaderboard'),
+            MongooseModule.forRoot('mongodb://localhost:27017/kaamelott-test'),
             MongooseModule.forFeature([{ name: 'leaderboard', schema: LeaderboardSchema }])
         ]
         
         })  
-        .overrideProvider(LeaderboardService)
-        .useValue(leaderboardService)
         .compile();
 
         app = moduleRef.createNestApplication();
@@ -80,21 +33,37 @@ describe('LeaderboardController', () => {
         return request(app.getHttpServer())
             .get('/leaderboards')
             .expect(200)
-            .expect(leaderboardService.findAll());
+            .expect(
+                res => {
+                    expect(res.body.data.length == 2).toBe(true)
+                }
+            );
     });
 
-    it(`/GET leaderboards topTen`, () => {
+    it(`/GET leaderboards top ten score`, () => {
         return request(app.getHttpServer())
-            .get('/leaderboards/topTen')
+            .get('/leaderboards')
             .expect(200)
-            .expect(leaderboardService.findTopTen());
+            .expect(
+                res => {
+                    expect(res.body.data.length == 2).toBe(true)
+                }
+            );
     });
 
     it(`/POST leaderboards`, () => {
         return request(app.getHttpServer())
             .post('/leaderboards')
-            .expect(200)
-            .expect(leaderboard);
+            .send({
+                name: 'John Doe',
+                score: 18
+            })
+            .expect(201)
+            .expect(
+                res => {
+                    expect(res.body.name).toBe("John Doe")
+                }
+            );
     });
         
     afterAll(async () => {

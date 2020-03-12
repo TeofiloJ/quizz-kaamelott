@@ -6,7 +6,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 
 
 @Module({
-    imports:[MongooseModule.forRoot('mongodb://localhost/quotes'),QuoteModule],
+    imports:[MongooseModule.forRoot('mongodb://localhost/kaamelott'),QuoteModule],
     providers:[Logger, Seeder],
 })
 export class SeederModule {}
