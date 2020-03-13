@@ -2,6 +2,7 @@ import { Injectable, Inject } from "@nestjs/common";
 import { Leaderboard } from "./leaderboard.interface";
 import { LeaderboardCreateDto } from "./leaderboard.dto";
 import { InjectModel } from '@nestjs/mongoose';
+
 import { Model } from 'mongoose';
 var JSONAPISerializer = require('jsonapi-serializer').Serializer;
 
@@ -17,29 +18,19 @@ export class LeaderboardService{
         return createdLeaderboard.save();
       }
     
-      async findAll(): Promise<any> {
+      async findAll(limit:number): Promise<any> {
         var leaderboardsSerializer = new JSONAPISerializer('leaderboards', {
           attributes: ['id', 'name', 'score']
         });
-        const db =  this.leaderboardModel
-            .find({},{'_id':0,'__v':0})
-            .exec();
-        console.log(db)
-        return db.then( result => { return  leaderboardsSerializer.serialize(result)
-        })
-        
-      }
+        var dblimit = Number(limit)
+        console.log(dblimit)
 
-      async findTopTen(): Promise<any> {
-        var leaderboardsSerializer = new JSONAPISerializer('leaderboards', {
-          attributes: ['name', 'score']
-        });
+        // const limitNumber = parseInt(limit)
         const db =  this.leaderboardModel
             .find({},{'_id':0,'__v':0})
-            .limit(10)
+            .limit(dblimit)
             .sort({ score: -1 })
             .exec();
-        console.log(db)
         return db.then( result => { return  leaderboardsSerializer.serialize(result)
         })
         

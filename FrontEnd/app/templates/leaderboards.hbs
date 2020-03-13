@@ -1,28 +1,36 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Tableau des scores:</h1>
-        </div>
-    </div>
-      
-       {{#each @model as |leaderboard|}}
-        <div class="row quote-row mt-2">
+    <div class="text-center">
+        <div class="row">
             <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        Name #{{leaderboard.name}}
-                    </div>
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                        <p>{{leaderboard.score}}</p>
-                        </blockquote>
-                    </div>
-                </div>
+                <h1>Tableau des scores  </h1>
             </div>
         </div>
-    {{/each}}
+        <div class="scoreboard">
+        
 
+        {{@model.topscore }}
+        {{#each @model.scoreList as |leaderboard index|}}
+            <div class="scoreboardPlayer">
+              {{!-- <p>Position: {{index}} ------- Nom: {{leaderboard.name}} -------  Score: {{leaderboard.score}} </p> --}}
+                <div class="row-leaderboard">
+                <div class="detailPlayerPosition col-sm">
+                    Position: {{index}}
+                </div>
+                <div class="detailPlayerName col-sm">
+                    Nom: {{leaderboard.name}}
+                </div>
+                <div class="detailPlayScore col-sm">
+                    Score: {{leaderboard.score}}
+                </div>
+                </div>
+                <BsProgress as |pg| >
+                 <pg.bar @value={{leaderboard.score}} @minValue={{0}} @maxValue={{@model.topScore}} @type="danger" />
+                </BsProgress>
+                </div>
+        {{/each}}
+        </div>
     
+    </div>
 
 </div>
 

@@ -80,3 +80,31 @@ opacity: 1;
     opacity: 1 !important;
     border: 8px double #ffffff !important;
 }
+
+.scoreboard {
+    margin-top: 2%; 
+}
+.scoreboardPlayer{
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+    margin-top: 1%;
+    min-height: 70px;
+    background-color: whitesmoke;
+}
+.detailPlayerName{
+    font-size: 16px;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    font-weight: 500;
+}
+.detailPlayScore{
+    margin-bottom: 1%;
+    margin-top: 1%;
+    font-weight: 400;
+}
+.detailPlayerPosition{
+    margin-bottom: 1%;
+    margin-top: 1%;
+    font-weight: 400;
+}

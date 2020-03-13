@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Put } from "@nestjs/common";
+import { Controller, Get, Post, Body, Put, Query, Param } from "@nestjs/common";
 import { Leaderboard } from "./leaderboard.interface";
 import { LeaderboardService } from "./leaderboard.service";
 import { LeaderboardCreateDto } from "./leaderboard.dto";
 import { ApiTags, ApiOperation } from "@nestjs/swagger";
+import { quotes } from "src/quote/quote.data";
 
 @Controller('leaderboards')
 @ApiTags('leaderboards')
@@ -11,13 +12,9 @@ export class LeaderboardController {
     
     @ApiOperation({ summary: 'Get all score in the leaderboard' })
     @Get()
-    async findAll(): Promise<Leaderboard[]>{
-    return this.leaderboardService.findAll();
-    }
-    @ApiOperation({ summary: 'Get top ten score in the leadeboard' })
-    @Get('/topTen')
-    async findTopTen(): Promise<Leaderboard[]>{
-    return this.leaderboardService.findTopTen();
+    // @Get('?limit=:limit')
+    async findAll(@Query()  query): Promise<Leaderboard[]>{
+    return this.leaderboardService.findAll(query.limit);
     }
     @Post()
     async create(@Body()  dto : LeaderboardCreateDto){
