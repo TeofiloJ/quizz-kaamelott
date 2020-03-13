@@ -12,15 +12,24 @@ export default class QuestionComponent extends Component {
 
   @tracked question
 
+  @tracked isFinished
+
   persoInconnu = "Personnage Inconnu"
 
   didReceiveAttrs(){
     this._super(...arguments);
     console.log("didReceiveAttrs")
-
+    this.disable = this.isDisable
     this.question = this.data
     // console.log(this.question);
-    
+    if (!this.isFinished || this.isFinished == null || this.isFinished == undefined) {
+      let ret = this.getButtonPersoArray()
+      // console.log(ret)
+      this.renderedPerso = ret
+    }
+  }
+  
+  getButtonPersoArray(){
     let min = 0
     let max = this.perso.length-1
     let ret = []
@@ -45,8 +54,6 @@ export default class QuestionComponent extends Component {
       randIndexUsed.push(randIndex)
       ret.push(this.perso[randIndex])
     }
-
-    
     // console.log(ret)
 
     for(let i = ret.length - 1; i > 0; i--){
@@ -55,10 +62,9 @@ export default class QuestionComponent extends Component {
       ret[i] = ret[j]
       ret[j] = temp
     }
-    // console.log(ret)
-    this.renderedPerso = ret
+    return ret
   }
-  
+
   @tracked perso = [
     "Angharad",
     "Anna",
@@ -132,12 +138,13 @@ export default class QuestionComponent extends Component {
           result = 0
           answerStyle = "color: red"
         }
-        this.nbQuestion++
 
         //call parent to give him result
         this.updateScore(result)
-        this.updateResponse(params.toElement.innerText, answerStyle)
-        if (!this.checkIfQuizzFinished()) {
+        this.updateResponse(params.toElement.innerText, answerStyle, (result != 0 ? "Vrai" : "Faux"))
+        this.isFinished = this.checkIfQuizzFinished()
+        if (!this.isFinished) {
+          this.nbQuestion++
           this.updateQuestionComponent()
         }
 

@@ -23,6 +23,8 @@ export default class QuizzController extends Controller {
 
   @tracked lastAnswer
 
+  @tracked isValid
+  
   @action 
   updateScore(score){
       this.score += score
@@ -30,18 +32,17 @@ export default class QuizzController extends Controller {
   }
 
   @action
-  updateResponse(lastAnswer, answerStyle){
+  updateResponse(lastAnswer, answerStyle, isValid){
     this.lastQuote = this.activeQuote
     this.lastAnswer = lastAnswer
     this.answerStyle = answerStyle
+    this.isValid = isValid
   }
 
   @action
   checkIfQuizzFinished(){
     if (this.nbAnswer == 10) {
       this.isFinished = true;
-      return this.isFinished
-      //call score feature
     }
     return this.isFinished
   }
