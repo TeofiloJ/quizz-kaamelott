@@ -24,15 +24,29 @@ export class LeaderboardService{
         });
         var dblimit = Number(limit)
         console.log(dblimit)
-
-        // const limitNumber = parseInt(limit)
         const db =  this.leaderboardModel
-            .find({},{'_id':0,'__v':0})
-            .limit(dblimit)
-            .sort({ score: -1 })
+        .find({},{'_id':0,'__v':0})
+        .limit(dblimit)
+        .sort({ score: -1 })
+        .exec();
+         return db.then( result => { return  leaderboardsSerializer.serialize(result)
+           }
+    )}
+
+     
+
+      async findOne(leaderboardId): Promise<any> {
+        var leaderboardsSerializer = new JSONAPISerializer('leaderboards', {
+          attributes: ['id', 'name', 'score']
+        });
+        const db =  this.leaderboardModel
+            .findOne({id: leaderboardId},{'_id':0,'__v':0})
             .exec();
         return db.then( result => { return  leaderboardsSerializer.serialize(result)
         })
         
       }
-}
+
+       
+        
+  }

@@ -14,8 +14,21 @@ export class LeaderboardController {
     @Get()
     // @Get('?limit=:limit')
     async findAll(@Query()  query): Promise<Leaderboard[]>{
-    return this.leaderboardService.findAll(query.limit);
+        return this.leaderboardService.findAll(query.limit);
     }
+
+
+    @ApiOperation({ summary: 'Get top ten score in the leadeboard' })
+    @Get('/topTen')
+    async findTopTen(): Promise<Leaderboard[]>{
+        return this.leaderboardService.findTopTen();
+    }
+
+    @Get(':id')    
+    async findOne(@Param('id') id: String): Promise<Leaderboard>{
+        return this.leaderboardService.findOne(id);
+    }
+
     @Post()
     async create(@Body()  dto : LeaderboardCreateDto){
         return this.leaderboardService.create(dto)

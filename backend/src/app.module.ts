@@ -4,8 +4,10 @@ import { LeaderboardModule } from './leaderboard/leaderboard.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: 
-    [MongooseModule.forRoot('mongodb://localhost/quotes'), 
-    QuoteModule, MongooseModule.forRoot('mongodb://localhost/leaderboards'), LeaderboardModule],
+  imports: [
+    MongooseModule.forRoot('mongodb://localhost/kaamelott'),
+    QuoteModule,
+    LeaderboardModule
+  ],
 })
 export class AppModule {}
