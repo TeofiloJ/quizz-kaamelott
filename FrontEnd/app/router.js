@@ -11,4 +11,5 @@ Router.map(function() {
   this.route('quotes');
   this.route('level-menu');
   this.route('quizz');
+  this.route('leaderboard');
 });

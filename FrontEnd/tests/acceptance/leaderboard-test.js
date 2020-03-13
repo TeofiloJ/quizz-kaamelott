@@ -1,8 +1,10 @@
 import { module, test } from 'qunit';
 import { visit, currentURL, click, pauseTest } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | quotes', function(hooks) {
+
+module('Acceptance | leaderboards', function(hooks) {
     setupApplicationTest(hooks);
     setupMirage(hooks);
 
@@ -11,12 +13,12 @@ module('Acceptance | quotes', function(hooks) {
         assert.equal(currentURL(), '/leaderboards');
       });
     
-      // test("get leaderboard", async function(assert) {
-      //   this.server.createList("leaderboard", 10);
+      test("get leaderboard", async function(assert) {
+        this.server.createList("leaderboard", 10);
     
-      //   await visit("/leaderboards");
+        await visit("/leaderboards");
     
-      //   assert.dom("div.row-leaderboard").exists({ count: 10 });
-      // });
+        assert.dom("div.row-leaderboard").exists({ count: 10 });
+      });
 
     });
