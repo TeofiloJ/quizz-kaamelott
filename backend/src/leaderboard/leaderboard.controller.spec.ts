@@ -37,15 +37,15 @@ describe('LeaderboardController', () => {
 
     beforeAll(async() => {
         insertData()
-        const moduleRef: TestingModule = await Test.createTestingModule({
-        controllers: [
-            LeaderboardController
-        ],
-        providers: [LeaderboardService],
-        imports: [
-            MongooseModule.forRoot(DB_URL),
-            MongooseModule.forFeature([{ name: 'leaderboard', schema: LeaderboardSchema }])
-        ]
+            const moduleRef: TestingModule = await Test.createTestingModule({
+            controllers: [
+                LeaderboardController
+            ],
+            providers: [LeaderboardService],
+            imports: [
+                MongooseModule.forRoot(DB_URL),
+                MongooseModule.forFeature([{ name: 'leaderboard', schema: LeaderboardSchema }])
+            ]
         
         })  
         .compile();
