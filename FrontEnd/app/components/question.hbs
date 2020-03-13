@@ -7,8 +7,8 @@
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
-                        <p>{{@data.text}}</p>
-                        <footer class="blockquote-footer">{{@data.character}} {{this.perso}}</footer>
+                        <p>{{this.question.text}} - {{this.question.season}} </p>
+                        <footer class="blockquote-footer">{{this.question.character}} {{this.perso}}</footer>
                         <div class="valideChapters">
                             {{#each this.renderedPerso as |perso|}}
                                 <button {{on 'click' this.validatePerso}} disabled={{this.disable}} style="margin-left: 1%;">{{perso}}</button>

@@ -12,6 +12,12 @@ export default class QuizzController extends Controller {
 
   @tracked isFinished = false
 
+  @tracked quotes = this.get('model')
+  
+  activeQuoteIndex = 0
+  @tracked activeQuote = this.quotes.content[this.activeQuoteIndex].__recordData._data
+  
+
   @action 
   updateScore(score){
       this.score += score
@@ -22,7 +28,17 @@ export default class QuizzController extends Controller {
   checkIfQuizzFinished(){
     if (this.nbAnswer == 10) {
       this.isFinished = true;
+      return this.isFinished
       //call score feature
     }
+    return this.isFinished
+  }
+
+  @action
+  updateQuestionComponent(){
+    this.activeQuoteIndex++
+    this.activeQuote = this.quotes.content[this.activeQuoteIndex].__recordData._data
+    
+    return this.activeQuoteIndex
   }
 }

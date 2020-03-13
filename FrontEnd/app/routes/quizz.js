@@ -9,7 +9,6 @@ export default class QuizzRoute extends Route {
         season: params['seasons']
       }
       }).then(function(res) {
-        console.log(res)
         return res
       })
   }

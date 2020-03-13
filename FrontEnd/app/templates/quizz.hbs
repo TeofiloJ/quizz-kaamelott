@@ -2,9 +2,7 @@
 <p>{{this.seasons}}</p>
 
 <div>
-    {{#each @model as |quote|}}
-       <Question @data={{quote}}  @updateScore={{this.updateScore}} @checkIfQuizzFinished={{this.checkIfQuizzFinished}} ></Question>
-    {{/each}}
+    <Question @data={{this.activeQuote}}  @updateScore={{this.updateScore}} @checkIfQuizzFinished={{this.checkIfQuizzFinished}} @updateQuestionComponent={{this.updateQuestionComponent}} ></Question>
 
     <span>{{this.score}}</span>
 </div>

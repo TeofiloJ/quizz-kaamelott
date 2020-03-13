@@ -12,24 +12,31 @@ export default class QuestionComponent extends Component {
 
   @tracked disable = false
 
+  @tracked question
+
   persoInconnu = "Personnage Inconnu"
 
   didReceiveAttrs(){
     this._super(...arguments);
+    console.log("didReceiveAttrs")
+
+    this.question = this.data
+    // console.log(this.question);
+    
     let min = 0
     let max = this.perso.length-1
     let ret = []
     let randIndexUsed = []
 
-    if (this.data.character == null || this.data.character == undefined || this.data.character == "") {
+    if (this.question.character == null || this.question.character == undefined || this.question.character == "") {
       ret.push(this.persoInconnu)
-      this.data.character = this.persoInconnu
+      this.question.character = this.persoInconnu
       // alert("perso inconnu")
     }else{
-      ret.push(this.data.character)
+      ret.push(this.question.character)
     }
 
-    randIndexUsed.push(this.perso.indexOf(this.data.character))
+    randIndexUsed.push(this.perso.indexOf(this.question.character))
     for (let index = 0; index < 3; index++) {
       let randIndex = -1
       do{
@@ -42,7 +49,7 @@ export default class QuestionComponent extends Component {
     }
 
     
-    console.log(ret)
+    // console.log(ret)
 
     for(let i = ret.length - 1; i > 0; i--){
       const j = Math.floor(Math.random() * i)
@@ -50,9 +57,8 @@ export default class QuestionComponent extends Component {
       ret[i] = ret[j]
       ret[j] = temp
     }
-    console.log(ret)
+    // console.log(ret)
     this.renderedPerso = ret
-    // return ret
   }
   
   @tracked perso = [
@@ -117,10 +123,10 @@ export default class QuestionComponent extends Component {
     @action
     validatePerso(params){
       //disable all button
-      this.disable = true
+      // this.disable = true
 
       let result
-        if (this.data.character == params.toElement.innerText) {
+        if (this.question.character == params.toElement.innerText) {
           result = 1
           this.errorMessage = "Vraie"
           this.answerStyle = "color: green;"
@@ -132,8 +138,18 @@ export default class QuestionComponent extends Component {
 
         //call parent to give him result
         this.updateScore(result)
+        if (!this.checkIfQuizzFinished()) {
+          this.updateMySelf()
+        }
         
-        this.checkIfQuizzFinished()
+        
+        
+
+    }
+
+    updateMySelf(){
+
+      console.log("updateMySelf : " + this.updateQuestionComponent())
     }
 
 
