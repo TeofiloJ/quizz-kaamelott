@@ -5,13 +5,24 @@ export default class LeaderBoardRoute extends Route {
     let scoreList = await this.store.query('leaderboard',{
       limit:10
     })
-    
-
-    console.log(scoreList.firstObject.score)
-    return {
+    if(scoreList.length > 0 ){
+      return {
+        'scoreList': scoreList,
+        'topScore': scoreList.firstObject.score
+      }
+    }else{
+      return{
       'scoreList': scoreList,
-      'topScore': scoreList.firstObject.score
+      'topScore': null
+      }
     }
+    
+    
+    // console.log(scoreList.firstObject.score)
+    // return {
+    //   'scoreList': scoreList,
+    //   'topScore': scoreList.firstObject.score
+    // }
 
   }
   

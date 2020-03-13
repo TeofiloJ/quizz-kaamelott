@@ -9,7 +9,9 @@ module('Acceptance | leaderboards', function(hooks) {
     setupMirage(hooks);
 
     test('visiting /leaderboards', async function(assert) {
+      // this.server.createList("leaderboard", 10);
         await visit('/leaderboards');
+        
         assert.equal(currentURL(), '/leaderboards');
       });
     
