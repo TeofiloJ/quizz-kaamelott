@@ -10,7 +10,7 @@
 .valideChapters{
     margin: 3vh;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
@@ -22,6 +22,14 @@
     font-weight: bold;
     font-style: italic;
 }
+
+.quizzAnswer{
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+}
+
+
 
 .chapter{
     flex: 0 1 auto;

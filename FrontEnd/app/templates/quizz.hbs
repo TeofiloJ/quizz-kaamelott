@@ -1,3 +1,12 @@
 <h2>Quioiiiiziiz</h2>
 <p>{{this.seasons}}</p>
+
+<div>
+    {{#each @model as |quote|}}
+       <Question @data={{quote}}  @updateScore={{this.updateScore}} @checkIfQuizzFinished={{this.checkIfQuizzFinished}} ></Question>
+    {{/each}}
+
+    <span>{{this.score}}</span>
+</div>
+<span>Is Finished : {{this.isFinished}}</span>
 {{outlet}}

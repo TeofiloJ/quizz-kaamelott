@@ -31,52 +31,53 @@ describe('QuoteController', () => {
 
 const quoteService = { findAll: () => quote };
 
-    let app: INestApplication;
-    beforeAll(async() => {
-      const moduleRef: TestingModule = await Test.createTestingModule({
-        controllers: [
-          QuoteController
-        ],
-        providers: [QuoteService],
-        imports: [
-          MongooseModule.forRoot('mongodb://localhost:27017/quote'),
-          MongooseModule.forFeature([{ name: 'quote', schema: QuoteSchema }])
-        ]
-      
-      })  
-      .overrideProvider(QuoteService)
-      .useValue(quoteService)
-      .compile();
-   
-      app = moduleRef.createNestApplication();
-      await app.init();
-    });
-    
-    it('should be true', () => {
-        expect(true).toBe(true);
-      });
-
+let app: INestApplication;
+beforeAll(async() => {
+  const moduleRef: TestingModule = await Test.createTestingModule({
+    controllers: [
+      QuoteController
+    ],
+    providers: [QuoteService],
+    imports: [
+      MongooseModule.forRoot('mongodb://localhost:27017/quote'),
+      MongooseModule.forFeature([{ name: 'quote', schema: QuoteSchema }])
+    ]
   
-    it(`/GET quotes`, () => {
-        return request(app.getHttpServer())
-          .get('/quotes')
-          .expect(200)
-          .expect(quoteService.findAll());
+  })  
+  .overrideProvider(QuoteService)
+  .useValue(quoteService)
+  .compile();
 
-      });
-      it(`/GET quotes TODO start here`, () => {
-        return request(app.getHttpServer())
-          .get('/quotes?filter%5Bseasons%5D=1%2C2')
-          .expect(200)
-          .expect(quoteService.findAll());
+  app = moduleRef.createNestApplication();
+  await app.init();
+});
 
-      });
-     
-      
-       afterAll(async () => {
-        await app.close();
-      });
-    });
+it('should be true', () => {
+    expect(true).toBe(true);
+  });
+
+
+it(`/GET quotes`, () => {
+    return request(app.getHttpServer())
+      .get('/quotes')
+      .expect(200)
+      .expect(quoteService.findAll());
+
+  });
+
+  it(`/GET quotes TODO start here`, () => {
+    return request(app.getHttpServer())
+      .get('/quotes?filter%5Bseasons%5D=1%2C2')
+      .expect(200)
+      .expect(quoteService.findAll());
+
+  });
+  
+  
+    afterAll(async () => {
+    await app.close();
+  });
+});
   
 
 
