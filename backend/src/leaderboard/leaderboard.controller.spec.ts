@@ -7,11 +7,22 @@ import { LeaderboardSchema } from "./leaderboard.schema";
 import { INestApplication } from "@nestjs/common";
 import * as request from 'supertest';
 
+const FactoryGirl = require('factory-girl');
+const factory = FactoryGirl.factory;
+
 var mongoose = require('mongoose');
 var ObjectID = require('mongodb').ObjectID;
 
 const DB_URL = 'mongodb://localhost:27017/kaamelott-test';
 const COLLECTION = 'leaderboards'
+
+var Leaderboard = mongoose.model('Quote', LeaderboardSchema)
+factory.define('Leaderboard', Leaderboard, {
+  id: new ObjectID(),
+  name: factory.chance('name'),
+  score: 15,
+});
+
 
 function cleaData(){
     mongoose.connect(DB_URL);
@@ -19,15 +30,17 @@ function cleaData(){
     conn.collection(COLLECTION).remove({})
 }
 
-function insertData(){
+async function insertData(){
 
     mongoose.connect(DB_URL);
     var conn = mongoose.connection;
-    var leaderboard = {
-        id: new ObjectID(),
-        "name": "foobar",
-        "score": "383" 
-    };
+    const leaderboard = await factory.build('Leaderboard').then(scoreGenerate => {
+        return {
+            "id": scoreGenerate.id,
+            "name": scoreGenerate.name,
+            "score": scoreGenerate.score
+        }
+      })
     conn.collection(COLLECTION).insert(leaderboard);
 }
 
@@ -95,17 +108,20 @@ describe('LeaderboardController', () => {
             );
     });
 
-    it(`/POST leaderboards`, () => {
+    it(`/POST leaderboards`, async () => {
+        const leaderboard = await factory.build('Leaderboard').then(scoreGenerate => {
+            return {
+              "name": scoreGenerate.name,
+              "score": scoreGenerate.score
+            }
+          })
         return request(app.getHttpServer())
             .post('/leaderboards')
-            .send({
-                name: 'John Doe',
-                score: 18
-            })
+            .send(leaderboard)
             .expect(201)
             .expect(
                 res => {
-                    expect(res.body.name).toBe("John Doe")
+                    expect(res.body.name).toBe(leaderboard.name)
                 }
             );
     });
