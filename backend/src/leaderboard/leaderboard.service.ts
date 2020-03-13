@@ -24,7 +24,18 @@ export class LeaderboardService{
         const db =  this.leaderboardModel
             .find({},{'_id':0,'__v':0})
             .exec();
-        console.log(db)
+        return db.then( result => { return  leaderboardsSerializer.serialize(result)
+        })
+        
+      }
+
+      async findOne(leaderboardId): Promise<any> {
+        var leaderboardsSerializer = new JSONAPISerializer('leaderboards', {
+          attributes: ['id', 'name', 'score']
+        });
+        const db =  this.leaderboardModel
+            .findOne({id: leaderboardId},{'_id':0,'__v':0})
+            .exec();
         return db.then( result => { return  leaderboardsSerializer.serialize(result)
         })
         
@@ -39,7 +50,6 @@ export class LeaderboardService{
             .limit(10)
             .sort({ score: -1 })
             .exec();
-        console.log(db)
         return db.then( result => { return  leaderboardsSerializer.serialize(result)
         })
         

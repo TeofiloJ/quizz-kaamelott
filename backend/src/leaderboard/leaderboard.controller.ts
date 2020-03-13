@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put } from "@nestjs/common";
+import { Controller, Get, Post, Body, Put, Param } from "@nestjs/common";
 import { Leaderboard } from "./leaderboard.interface";
 import { LeaderboardService } from "./leaderboard.service";
 import { LeaderboardCreateDto } from "./leaderboard.dto";
@@ -12,13 +12,20 @@ export class LeaderboardController {
     @ApiOperation({ summary: 'Get all score in the leaderboard' })
     @Get()
     async findAll(): Promise<Leaderboard[]>{
-    return this.leaderboardService.findAll();
+        return this.leaderboardService.findAll();
     }
+
     @ApiOperation({ summary: 'Get top ten score in the leadeboard' })
     @Get('/topTen')
     async findTopTen(): Promise<Leaderboard[]>{
-    return this.leaderboardService.findTopTen();
+        return this.leaderboardService.findTopTen();
     }
+
+    @Get(':id')    
+    async findOne(@Param('id') id: String): Promise<Leaderboard>{
+        return this.leaderboardService.findOne(id);
+    }
+
     @Post()
     async create(@Body()  dto : LeaderboardCreateDto){
         return this.leaderboardService.create(dto)

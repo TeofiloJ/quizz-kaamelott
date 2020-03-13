@@ -6,18 +6,46 @@ import { QuoteSchema } from "./quote.schema";
 import { INestApplication } from "@nestjs/common";
 import * as request from 'supertest';
 
+var mongoose = require('mongoose');
+var ObjectID = require('mongodb').ObjectID;
+
+const DB_URL = 'mongodb://localhost:27017/kaamelott-test';
+const COLLECTION = 'quotes'
+
+function cleaData(){
+  mongoose.connect(DB_URL);
+  var conn = mongoose.connection;
+  conn.collection(COLLECTION).remove({})
+}
+
+function insertData(){
+    mongoose.connect(DB_URL);
+    var conn = mongoose.connection;
+    var quote = {
+      "id": new ObjectID(),
+      "character": "Perceval",
+      "text": "string",
+      "actor": "string",
+      "author": "string",
+      "season": "string",
+      "episode": "string"
+    };
+    conn.collection(COLLECTION).insert(quote);
+}
+
 describe('QuoteController', () => {
 
   let app: INestApplication;
 
   beforeAll(async() => {
+    insertData()
     const moduleRef: TestingModule = await Test.createTestingModule({
       controllers: [
         QuoteController
       ],
       providers: [QuoteService],
       imports: [
-        MongooseModule.forRoot('mongodb://localhost:27017/kaamelott-test'),
+        MongooseModule.forRoot(DB_URL),
         MongooseModule.forFeature([{ name: 'quote', schema: QuoteSchema }])
       ]
     
@@ -42,8 +70,9 @@ describe('QuoteController', () => {
 
   it(`/POST quotes`, () => {
     return request(app.getHttpServer())
-        .post('/leaderboards')
+        .post('/quotes')
         .send({
+          "id": "1",
           "character": "Arthur",
           "text": "string",
           "actor": "string",
@@ -60,6 +89,7 @@ describe('QuoteController', () => {
 });
     
   afterAll(async () => {
+    cleaData()
     await app.close();
   });
 

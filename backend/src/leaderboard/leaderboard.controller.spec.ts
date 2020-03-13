@@ -7,18 +7,43 @@ import { LeaderboardSchema } from "./leaderboard.schema";
 import { INestApplication } from "@nestjs/common";
 import * as request from 'supertest';
 
+var mongoose = require('mongoose');
+var ObjectID = require('mongodb').ObjectID;
+
+const DB_URL = 'mongodb://localhost:27017/kaamelott-test';
+const COLLECTION = 'leaderboards'
+
+function cleaData(){
+    mongoose.connect(DB_URL);
+    var conn = mongoose.connection;
+    conn.collection(COLLECTION).remove({})
+}
+
+function insertData(){
+
+    mongoose.connect(DB_URL);
+    var conn = mongoose.connection;
+    var leaderboard = {
+        id: new ObjectID(),
+        "name": "foobar",
+        "score": "383" 
+    };
+    conn.collection(COLLECTION).insert(leaderboard);
+}
+
 describe('LeaderboardController', () => {
 
     let app: INestApplication;
 
     beforeAll(async() => {
+        insertData()
         const moduleRef: TestingModule = await Test.createTestingModule({
         controllers: [
             LeaderboardController
         ],
         providers: [LeaderboardService],
         imports: [
-            MongooseModule.forRoot('mongodb://localhost:27017/kaamelott-test'),
+            MongooseModule.forRoot(DB_URL),
             MongooseModule.forFeature([{ name: 'leaderboard', schema: LeaderboardSchema }])
         ]
         
@@ -35,7 +60,7 @@ describe('LeaderboardController', () => {
             .expect(200)
             .expect(
                 res => {
-                    expect(res.body.data.length == 2).toBe(true)
+                    expect(res.body.data.length > 0).toBe(true)
                 }
             );
     });
@@ -46,7 +71,26 @@ describe('LeaderboardController', () => {
             .expect(200)
             .expect(
                 res => {
-                    expect(res.body.data.length == 2).toBe(true)
+                    expect(res.body.data.length > 0).toBe(true)
+                }
+            );
+    });
+
+    it(`/GET return a score from id `, async () => {
+        let scoreId = await request(app.getHttpServer())
+            .post('/leaderboards')
+            .send({
+                name: 'John Doe',
+                score: 18
+            }).then(res =>{
+                return res.body.id
+            })
+        return request(app.getHttpServer())
+            .get('/leaderboards/' + scoreId)
+            .expect(200)
+            .expect(
+                res => {
+                    expect(res.body.data.attributes.id).toBe(scoreId)
                 }
             );
     });
@@ -67,6 +111,7 @@ describe('LeaderboardController', () => {
     });
         
     afterAll(async () => {
+        cleaData()
         await app.close();
     });
 
