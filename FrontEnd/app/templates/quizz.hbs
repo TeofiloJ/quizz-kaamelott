@@ -1,3 +1,15 @@
-<h2>Quioiiiiziiz</h2>
-<p>{{this.seasons}}</p>
+
+<h3>Livre sélectionner : {{this.seasons}}</h3>
+
+<div>
+    {{#if this.lastQuote}}
+        <Response @quote={{this.lastQuote}} @answer={{this.lastAnswer}} @answerStyle={{this.answerStyle}} @isValid={{this.isValid}}></Response>
+    {{/if}}
+
+    <Question @data={{this.activeQuote}}  @updateScore={{this.updateScore}} @checkIfQuizzFinished={{this.checkIfQuizzFinished}} @updateQuestionComponent={{this.updateQuestionComponent}} @updateResponse={{this.updateResponse}} @isDisable={{this.isFinished}}></Question>
+</div>
+
+<div style="display: flex; justify-content:center; margin: 1%">
+    <button {{on 'click' this.moveToScoreBoard}} >ScoreBoard</button>
+</div>
 {{outlet}}

@@ -1,13 +1,16 @@
 import Route from '@ember/routing/route';
+import { tracked } from '@glimmer/tracking';
 
 export default class QuizzRoute extends Route {
-    model(){
-        debugger;
-        return this.store.query('quote', {
-            filter: {
-              seasons: this.seasons
-            }
-          })
-    }
+
+  model(params){
+    return this.store.query('quote', {
+      filter: {
+        season: params['seasons']
+      }
+      }).then(function(res) {
+        return res
+      })
+  }
 
 }

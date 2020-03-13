@@ -107,6 +107,18 @@ describe('QuoteController', () => {
       );
   });
 
+  it(`/GET quotes TODO start here`, () => {
+    return request(app.getHttpServer())
+      .get('/quotes?filter%5Bseasons%5D=1%2C2')
+      .expect(200)
+      .expect(
+        res => {
+          expect(res.body.data.length > 0).toBe(true)
+        }
+      );
+
+  });
+
   afterAll(async () => {
     cleaData()
     await app.close();
