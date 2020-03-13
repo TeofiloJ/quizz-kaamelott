@@ -23,7 +23,6 @@ export class LeaderboardService{
           attributes: ['id', 'name', 'score']
         });
         var dblimit = Number(limit)
-        console.log(dblimit)
         const db =  this.leaderboardModel
         .find({},{'_id':0,'__v':0})
         .limit(dblimit)
