@@ -23,7 +23,7 @@ export class QuoteService {
     });
     let filter = {};
 
-    if (query.filter != undefined && && query.filter.season != null && query.filter.season != undefined) {
+    if (query.filter != undefined && query.filter.season != null && query.filter.season != undefined) {
       let season = query.filter.season.split(",")
 
       let arr = []
