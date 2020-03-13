@@ -1,5 +1,5 @@
-export default function() {
+export default function(server) {
 
-  this.server.createList('quotes', 10);
+  server.createList('quote', 10);
 
 }

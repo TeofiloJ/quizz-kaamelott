@@ -7,6 +7,7 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function() {
+  this.route('leaderboards');
   this.route('quotes');
   this.route('level-menu');
   this.route('quizz');

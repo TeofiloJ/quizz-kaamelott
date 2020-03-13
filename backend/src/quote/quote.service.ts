@@ -22,7 +22,6 @@ export class QuoteService{
           attributes: ['character', 'text','actor','author','season','episode','character']
         });
         const db =  this.quoteModel.find({},{'_id':0,'__v':0}).exec();
-        console.log(db)
         return db.then( result => { return  quotesSerializer.serialize(result)
         })
         

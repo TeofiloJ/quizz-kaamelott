@@ -11,10 +11,10 @@ export class QuoteController {
     
     @Get()
     async findAll(): Promise<Quote[]>{
-    return this.quoteService.findAll();
+        return this.quoteService.findAll();
     }
     @Post()
     async create(@Body()  dto : QuoteCreateDto){
         return this.quoteService.create(dto)
     }
-    }
+}
