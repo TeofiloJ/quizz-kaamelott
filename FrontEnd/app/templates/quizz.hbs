@@ -2,7 +2,11 @@
 <p>{{this.seasons}}</p>
 
 <div>
-    <Question @data={{this.activeQuote}}  @updateScore={{this.updateScore}} @checkIfQuizzFinished={{this.checkIfQuizzFinished}} @updateQuestionComponent={{this.updateQuestionComponent}} ></Question>
+    {{#if this.lastQuote}}
+        <Response @quote={{this.lastQuote}} @answer={{this.lastAnswer}} @answerStyle={{this.answerStyle}}></Response>
+    {{/if}}
+
+    <Question @data={{this.activeQuote}}  @updateScore={{this.updateScore}} @checkIfQuizzFinished={{this.checkIfQuizzFinished}} @updateQuestionComponent={{this.updateQuestionComponent}} @updateResponse={{this.updateResponse}} ></Question>
 
     <span>{{this.score}}</span>
 </div>

@@ -17,11 +17,23 @@ export default class QuizzController extends Controller {
   activeQuoteIndex = 0
   @tracked activeQuote = this.quotes.content[this.activeQuoteIndex].__recordData._data
   
+  @tracked answerStyle
+
+  @tracked lastQuote
+
+  @tracked lastAnswer
 
   @action 
   updateScore(score){
       this.score += score
       this.nbAnswer++
+  }
+
+  @action
+  updateResponse(lastAnswer, answerStyle){
+    this.lastQuote = this.activeQuote
+    this.lastAnswer = lastAnswer
+    this.answerStyle = answerStyle
   }
 
   @action

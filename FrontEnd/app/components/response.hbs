@@ -3,17 +3,12 @@
                 <div class="card">
                     <div class="card-header" style="font-weight: bold;">
                         {{!-- Citation #{{quote.id}} --}}
-                        Question {{this.nbQuestion}}
+                        Dernière réponse :
                     </div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
-                        <p>De qui provient cette citation ?</p>
-                        <footer class="blockquote-footer">{{this.question.text}}</footer>
-                        <div class="valideChapters">
-                            {{#each this.renderedPerso as |perso|}}
-                                <button {{on 'click' this.validatePerso}} disabled={{this.disable}} style="margin-left: 1%;">{{perso}}</button>
-                            {{/each}}
-                        </div>
+                        <p>Bonne réponse : {{@quote.character}} - Votre réponse : <span style={{@answerStyle}}>{{@answer}}</span> </p>
+                        <footer class="blockquote-footer">{{@quote.text}}</footer>
                         {{!-- <footer class="blockquote-footer">{{quote.character}} (<cite title="Source Title">{{quote.season}} épisode {{quote.episode}}).</cite></footer> --}}
                         </blockquote>
                     </div>

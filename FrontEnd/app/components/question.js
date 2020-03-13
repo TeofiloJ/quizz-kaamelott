@@ -6,9 +6,7 @@ export default class QuestionComponent extends Component {
   
   @tracked renderedPerso
 
-  @tracked errorMessage = ""
-
-  @tracked answerStyle = ""
+  @tracked nbQuestion = 1
 
   @tracked disable = false
 
@@ -126,31 +124,22 @@ export default class QuestionComponent extends Component {
       // this.disable = true
 
       let result
+      let answerStyle
         if (this.question.character == params.toElement.innerText) {
           result = 1
-          this.errorMessage = "Vraie"
-          this.answerStyle = "color: green;"
+          answerStyle = "color: green"
         }else{
           result = 0
-          this.errorMessage = "Faux"
-          this.answerStyle = ""
+          answerStyle = "color: red"
         }
+        this.nbQuestion++
 
         //call parent to give him result
         this.updateScore(result)
+        this.updateResponse(params.toElement.innerText, answerStyle)
         if (!this.checkIfQuizzFinished()) {
-          this.updateMySelf()
+          this.updateQuestionComponent()
         }
-        
-        
-        
 
     }
-
-    updateMySelf(){
-
-      console.log("updateMySelf : " + this.updateQuestionComponent())
-    }
-
-
 }
