@@ -19,8 +19,7 @@ module('Acceptance | leaderboards', function(hooks) {
         this.server.createList("leaderboard", 10);
     
         await visit("/leaderboards");
-    
-        assert.dom("div.row-leaderboard").exists({ count: 10 });
+        assert.dom("div.row.score").exists({ count: 10 });
       });
 
     });

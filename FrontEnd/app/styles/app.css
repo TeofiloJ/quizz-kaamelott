@@ -17,13 +17,19 @@
     align-content: center;
     align-items: center;
 }
-
 .errorMsg{
     color: red;
     font-weight: bold;
     font-style: italic;
 }
-
+.bold {
+    font-weight: bold;
+}
+.quizz{
+    display: flex;
+    justify-content:center; 
+    margin: 1%
+}
 .quizzAnswer{
     color: red;
     font-weight: bold;
