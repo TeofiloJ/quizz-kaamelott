@@ -11,7 +11,7 @@
                         <footer class="blockquote-footer" style="font-size: large">"{{this.question.text}}"</footer>
                         <div class="valideChapters">
                             {{#each this.renderedPerso as |perso|}}
-                                <button {{on 'click' this.validatePerso}} disabled={{this.disable}} style="margin-left: 1%;">{{perso}}</button>
+                                <button class="btn btn-dark" {{on 'click' this.validatePerso}} disabled={{this.disable}} style="margin-left: 1%;">{{perso}}</button>
                             {{/each}}
                         </div>
                         {{!-- <footer class="blockquote-footer">{{quote.character}} (<cite title="Source Title">{{quote.season}} épisode {{quote.episode}}).</cite></footer> --}}

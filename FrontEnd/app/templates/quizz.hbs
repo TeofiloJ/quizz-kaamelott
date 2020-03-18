@@ -1,15 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Livre sélectionné : {{this.seasons}}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div>
+                {{#if this.lastQuote}}
+                    <Response @quote={{this.lastQuote}} @answer={{this.lastAnswer}} @answerStyle={{this.answerStyle}} @isValid={{this.isValid}}></Response>
+                {{/if}}
+                {{#unless this.isFinished}}
+                    <Question @data={{this.activeQuote}}  @updateScore={{this.updateScore}} @checkIfQuizzFinished={{this.checkIfQuizzFinished}} @updateQuestionComponent={{this.updateQuestionComponent}} @updateResponse={{this.updateResponse}} @isDisable={{this.isFinished}}></Question>
+                {{/unless}}
 
-<h3>Livre sélectionner : {{this.seasons}}</h3>
-
-<div>
-    {{#if this.lastQuote}}
-        <Response @quote={{this.lastQuote}} @answer={{this.lastAnswer}} @answerStyle={{this.answerStyle}} @isValid={{this.isValid}}></Response>
+                
+            </div>
+        </div>
+    </div>
+    {{#if this.isFinished}}
+    <div class="row">
+        <div class="col">
+            <div style="display: flex; justify-content:center; margin: 1%">
+                <button class="btn btn-success" {{on 'click' this.moveToScoreBoard}} >Consulter mon score</button>
+            </div>
+        </div>
+    </div>
     {{/if}}
 
-    <Question @data={{this.activeQuote}}  @updateScore={{this.updateScore}} @checkIfQuizzFinished={{this.checkIfQuizzFinished}} @updateQuestionComponent={{this.updateQuestionComponent}} @updateResponse={{this.updateResponse}} @isDisable={{this.isFinished}}></Question>
 </div>
 
-<div style="display: flex; justify-content:center; margin: 1%">
-    <button {{on 'click' this.moveToScoreBoard}} >ScoreBoard</button>
-</div>
-{{outlet}}
+
+
+
+
+{{!-- {{outlet}} --}}

@@ -1,4 +1,5 @@
 .chapter-list{
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -43,8 +44,8 @@
 }
 
 .bookImg{
-    width:  264px;
-    height: 384px;
+    width:  198px;
+    height: 288px;
     border: 4px solid #000000;
     /* border: 5px solid #a9a9a9; */
     border-radius: 40px;
