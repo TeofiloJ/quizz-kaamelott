@@ -6,6 +6,8 @@ export default class QuizzController extends Controller {
   queryParams = ['seasons'];
   @tracked seasons = null;
 
+  @tracked name = "";
+
   @tracked score = 0
 
   @tracked nbAnswer = 0
@@ -53,5 +55,10 @@ export default class QuizzController extends Controller {
     this.activeQuote = this.quotes.content[this.activeQuoteIndex].__recordData._data
     
     return this.activeQuoteIndex
+  }
+
+  @action
+  moveToScoreBoard(){
+    this.transitionToRoute('leaderboards', { queryParams: { name: this.name, score: this.score } })
   }
 }

@@ -6,22 +6,26 @@
             </div>
         </div>
         <div class="scoreboard">
-        
 
-        {{@model.topscore }}
+        {{#if @model.newScore.score}}
+        <div class="row d-flex justify-content-center">
+            <p>{{@model.newScore.name}}, votre score est de: <strong>{{@model.newScore.score}}</strong></p>
+        </div>
+        {{/if}}
+        
         {{#each @model.scoreList as |leaderboard index|}}
             <div class="scoreboardPlayer">
               {{!-- <p>Position: {{index}} ------- Nom: {{leaderboard.name}} -------  Score: {{leaderboard.score}} </p> --}}
-                <div class="row-leaderboard">
-                <div class="detailPlayerPosition col-sm">
-                    Position: {{index}}
-                </div>
-                <div class="detailPlayerName col-sm">
-                    Nom: {{leaderboard.name}}
-                </div>
-                <div class="detailPlayScore col-sm">
-                    Score: {{leaderboard.score}}
-                </div>
+                <div class="row score">
+                    <div class=" col-sm-4">
+                        #{{index}}
+                    </div>
+                    <div class=" col-sm-4">
+                        {{leaderboard.name}}
+                    </div>
+                    <div class=" col-sm-4">
+                        {{leaderboard.score}}
+                    </div>
                 </div>
                 <BsProgress as |pg| >
                  <pg.bar @value={{leaderboard.score}} @minValue={{0}} @maxValue={{@model.topScore}} @type="danger" />

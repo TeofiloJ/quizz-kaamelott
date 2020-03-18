@@ -90,15 +90,16 @@ opacity: 1;
     border: 8px double #ffffff !important;
 }
 
+.score{
+    font-weight: bold;
+    font-size: 25px;
+}
+
 .scoreboard {
     margin-top: 2%; 
 }
 .scoreboardPlayer{
-    -webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
-    margin-top: 1%;
-    min-height: 70px;
+    min-height: 30px;
     background-color: whitesmoke;
 }
 .detailPlayerName{

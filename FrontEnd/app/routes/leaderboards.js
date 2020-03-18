@@ -1,21 +1,41 @@
 import Route from '@ember/routing/route';
 
 export default class LeaderBoardRoute extends Route {
-  async model() {
+  async model(params) {
+    let newScore = ''
+    if(params.name != undefined && params.score != undefined){
+      newScore = await this.store.createRecord('leaderboard', {
+        name: params.name,
+        score: params.score
+      })
+      newScore.save()   
+    }
+
+    let res;
+    
     let scoreList = await this.store.query('leaderboard',{
       limit:10
     })
     if(scoreList.length > 0 ){
-      return {
+      res = {
+        'newScore': '',
         'scoreList': scoreList,
         'topScore': scoreList.firstObject.score
       }
+
     }else{
-      return{
+      res = {
+      'newScore': '',
       'scoreList': scoreList,
       'topScore': null
       }
     }
+
+    if(params.name != undefined && params.score != undefined){
+      res['newScore'] = newScore
+    }
+
+    return res;
     
     
     // console.log(scoreList.firstObject.score)
