@@ -33,6 +33,6 @@ module('Acceptance | quizz', function(hooks) {
     await fillIn('input.form-control.ember-text-field.ember-view', 'toto');
     await click('button.btn.btn-success');
     
-    assert.equal(currentURL(), '/leaderboards?name=toto&score=0');
+    assert.equal(currentURL().substring(0,currentURL().length - 1), '/leaderboards?name=toto&score=0');
   });
 });

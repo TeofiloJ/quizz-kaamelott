@@ -21,7 +21,7 @@ factory.define('Quote', Quote, {
   text: factory.chance('sentence'),
   actor: factory.chance('name'),
   author: factory.chance('name'),
-  season: factory.sequence('season', (n) => `season_${n}`),
+  season: factory.sequence('season', (n) => `Livre ${n}`),
   episode: factory.sequence('episode', (n) => `episode${n}`),
   character: factory.chance('name'),
 });
@@ -107,16 +107,19 @@ describe('QuoteController', () => {
       );
   });
 
-  it(`/GET quotes TODO start here`, () => {
+  it(`/GET quotes filter`, () => {
+    var filter = { filter: {
+      season: "Livre 1"
+    }}
     return request(app.getHttpServer())
-      .get('/quotes?filter%5Bseasons%5D=1%2C2')
+      .get('/quotes?filter%5Bseasons%5D=Livre%201')
+      .send(filter)
       .expect(200)
       .expect(
         res => {
-          expect(res.body.data.length > 0).toBe(true)
+          expect(res.body.data[0].attributes.season).toBe("Livre 1")
         }
       );
-
   });
 
   afterAll(async () => {
