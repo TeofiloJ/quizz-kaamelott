@@ -21,7 +21,7 @@ export class LeaderboardService{
         newDto.score = dto.data.attributes.score;
         
 
-        newDto.score = Math.floor(newDto.score * 683)
+        newDto.score = Math.abs(Math.floor(newDto.score * 683))
         const createdLeaderboard = new this.leaderboardModel(newDto);
         return createdLeaderboard.save().then( result => { return  leaderboardsSerializer.serialize(result)});
       }
