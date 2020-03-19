@@ -93,10 +93,15 @@ describe('LeaderboardController', () => {
         let scoreId = await request(app.getHttpServer())
             .post('/leaderboards')
             .send({
-                name: 'John Doe',
-                score: 18
+                "data": {
+                    "attributes": {
+                        "name": 'John Doe',
+                        "score": 18
+                    },
+                    "type": "leaderboards"
+                }
             }).then(res =>{
-                return res.body.id
+                return res.body.data.attributes.id
             })
         return request(app.getHttpServer())
             .get('/leaderboards/' + scoreId)
@@ -111,8 +116,13 @@ describe('LeaderboardController', () => {
     it(`/POST leaderboards`, async () => {
         const leaderboard = await factory.build('Leaderboard').then(scoreGenerate => {
             return {
-              "name": scoreGenerate.name,
-              "score": scoreGenerate.score
+                "data": {
+                    "attributes": {
+                        "name": scoreGenerate.name,
+                        "score": scoreGenerate.score
+                    },
+                    "type": "leaderboards"
+                }
             }
           })
         return request(app.getHttpServer())

@@ -12,10 +12,18 @@ export class LeaderboardService{
     constructor(
         @InjectModel('leaderboard') private readonly leaderboardModel: Model<Leaderboard>) {}
 
-      async create(dto: LeaderboardCreateDto): Promise<Leaderboard> {
-        dto.score = Math.floor(dto.score * 683)
-        const createdLeaderboard = new this.leaderboardModel(dto);
-        return createdLeaderboard.save();
+      async create(dto): Promise<Leaderboard> {
+        var leaderboardsSerializer = new JSONAPISerializer('leaderboards', {
+          attributes: ['id', 'name', 'score']
+        });
+        var newDto = new LeaderboardCreateDto();
+        newDto.name = dto.data.attributes.name;
+        newDto.score = dto.data.attributes.score;
+        
+
+        newDto.score = Math.floor(newDto.score * 683)
+        const createdLeaderboard = new this.leaderboardModel(newDto);
+        return createdLeaderboard.save().then( result => { return  leaderboardsSerializer.serialize(result)});
       }
     
       async findAll(limit:number): Promise<any> {

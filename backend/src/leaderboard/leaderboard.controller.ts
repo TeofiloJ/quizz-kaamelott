@@ -24,7 +24,8 @@ export class LeaderboardController {
     }
 
     @Post()
-    async create(@Body()  dto : LeaderboardCreateDto){
-        return this.leaderboardService.create(dto)
+    async create(@Body()  dto){
+        
+        return this.leaderboardService.create(dto);
     }
     }

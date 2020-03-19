@@ -4,11 +4,12 @@ export default class LeaderBoardRoute extends Route {
   async model(params) {
     let newScore = ''
     if(params.name != undefined && params.score != undefined){
+      debugger
       newScore = await this.store.createRecord('leaderboard', {
         name: params.name,
         score: params.score
       })
-      newScore.save()   
+      await newScore.save()
     }
 
     let res;
