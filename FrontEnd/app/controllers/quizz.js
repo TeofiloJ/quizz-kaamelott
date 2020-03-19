@@ -6,6 +6,8 @@ export default class QuizzController extends Controller {
   queryParams = ['seasons'];
   @tracked seasons = null;
 
+  lastQueryParams = null
+
   @tracked name = "";
 
   @tracked score = 0
@@ -15,10 +17,10 @@ export default class QuizzController extends Controller {
   @tracked isFinished = false
 
   @tracked quotes = this.get('model')
-  
+
   activeQuoteIndex = 0
   @tracked activeQuote = this.quotes.content[this.activeQuoteIndex].__recordData._data
-  
+
   @tracked answerStyle
 
   @tracked lastQuote
@@ -26,15 +28,22 @@ export default class QuizzController extends Controller {
   @tracked lastAnswer
 
   @tracked isValid
-  
-  @action 
-  updateScore(score){
-      this.score += score
-      this.nbAnswer++
+
+  didInsertElement() {
+
   }
 
   @action
-  updateResponse(lastAnswer, answerStyle, isValid){
+  updateScore(score) {
+    this.score += score
+    this.nbAnswer++
+
+    console.log(this.score);
+    console.log(this.nbAnswer);
+  }
+
+  @action
+  updateResponse(lastAnswer, answerStyle, isValid) {
     this.lastQuote = this.activeQuote
     this.lastAnswer = lastAnswer
     this.answerStyle = answerStyle
@@ -42,7 +51,7 @@ export default class QuizzController extends Controller {
   }
 
   @action
-  checkIfQuizzFinished(){
+  checkIfQuizzFinished() {
     if (this.nbAnswer == 10) {
       this.isFinished = true;
     }
@@ -50,15 +59,15 @@ export default class QuizzController extends Controller {
   }
 
   @action
-  updateQuestionComponent(){
+  updateQuestionComponent() {
     this.activeQuoteIndex++
     this.activeQuote = this.quotes.content[this.activeQuoteIndex].__recordData._data
-    
+
     return this.activeQuoteIndex
   }
 
   @action
-  moveToScoreBoard(){
+  moveToScoreBoard() {
     this.transitionToRoute('leaderboards', { queryParams: { name: this.name, score: this.score } })
   }
 }

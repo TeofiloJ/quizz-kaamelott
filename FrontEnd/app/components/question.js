@@ -138,7 +138,7 @@ export default class QuestionComponent extends Component {
           result = 0
           answerStyle = "color: red"
         }
-
+        
         //call parent to give him result
         this.updateScore(result)
         this.updateResponse(params.toElement.innerText, answerStyle, (result != 0 ? "Vrai" : "Faux"))
