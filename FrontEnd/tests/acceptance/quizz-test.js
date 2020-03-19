@@ -30,9 +30,10 @@ module('Acceptance | quizz', function(hooks) {
     await click('button.btn.btn-dark');//8
     await click('button.btn.btn-dark');//9
     await click('button.btn.btn-dark');//10
-    await fillIn('input.form-control.ember-text-field.ember-view', 'toto');
+    
+    await fillIn('input.form-control', 'toto');
     await click('button.btn.btn-success');
     
-    assert.equal(currentURL().substring(0,currentURL().length - 1), '/leaderboards?name=toto&score=0');
+    assert.equal(currentURL().substring(0,currentURL().length - 1), '/leaderboards?name=toto&score=');
   });
 });
