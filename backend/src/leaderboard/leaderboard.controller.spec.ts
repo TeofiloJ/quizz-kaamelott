@@ -112,6 +112,20 @@ describe('LeaderboardController', () => {
                 }
             );
     });
+    it(`/ return bad request score negative `, async () => {
+        let scoreId = await request(app.getHttpServer())
+            .post('/leaderboards')
+            .send({
+                "data": {
+                    "attributes": {
+                        "name": 'John Doe',
+                        "score": -1
+                    },
+                    "type": "leaderboards"
+                }
+            }).expect(400)
+
+    });
 
     it(`/POST leaderboards`, async () => {
         const leaderboard = await factory.build('Leaderboard').then(scoreGenerate => {

@@ -1,4 +1,4 @@
-import { Injectable, Inject } from "@nestjs/common";
+import { Injectable, Inject, HttpException, HttpStatus } from "@nestjs/common";
 import { Leaderboard } from "./leaderboard.interface";
 import { LeaderboardCreateDto } from "./leaderboard.dto";
 import { InjectModel } from '@nestjs/mongoose';
@@ -19,7 +19,9 @@ export class LeaderboardService{
         var newDto = new LeaderboardCreateDto();
         newDto.name = dto.data.attributes.name;
         newDto.score = dto.data.attributes.score;
-        
+        if (newDto.score < 0) {
+          throw  new HttpException(`valeur negative non autoriser`, HttpStatus.BAD_REQUEST);
+        }
 
         newDto.score = Math.abs(Math.floor(newDto.score * 683))
         const createdLeaderboard = new this.leaderboardModel(newDto);
