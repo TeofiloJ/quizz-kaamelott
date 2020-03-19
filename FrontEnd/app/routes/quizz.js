@@ -25,6 +25,8 @@ export default class QuizzRoute extends Route {
       controller.set('lastAnswer', null);
       controller.set('isValid', null);
       controller.set('answerStyle', null);
+      controller.set('activeQuoteIndex', 0);
+
     }
   }
 

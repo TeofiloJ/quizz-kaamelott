@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class QuestionComponent extends Component {
-  
+
   @tracked renderedPerso
 
   @tracked nbQuestion = 1
@@ -16,7 +16,7 @@ export default class QuestionComponent extends Component {
 
   persoInconnu = "Personnage Inconnu"
 
-  didReceiveAttrs(){
+  didReceiveAttrs() {
     this._super(...arguments);
     console.log("didReceiveAttrs")
     this.disable = this.isDisable
@@ -28,10 +28,10 @@ export default class QuestionComponent extends Component {
       this.renderedPerso = ret
     }
   }
-  
-  getButtonPersoArray(){
+
+  getButtonPersoArray() {
     let min = 0
-    let max = this.perso.length-1
+    let max = this.perso.length - 1
     let ret = []
     let randIndexUsed = []
 
@@ -39,29 +39,24 @@ export default class QuestionComponent extends Component {
       ret.push(this.persoInconnu)
       this.question.character = this.persoInconnu
       // alert("perso inconnu")
-    }else{
+    } else {
       ret.push(this.question.character)
     }
 
     randIndexUsed.push(this.perso.indexOf(this.question.character))
     for (let index = 0; index < 3; index++) {
       let randIndex = -1
-      do{
+      do {
         randIndex = Math.floor(Math.random() * (max - min + 1)) + min
       } while (randIndexUsed.includes(randIndex))
-      
+
 
       randIndexUsed.push(randIndex)
       ret.push(this.perso[randIndex])
     }
-    // console.log(ret)
 
-    for(let i = ret.length - 1; i > 0; i--){
-      const j = Math.floor(Math.random() * i)
-      const temp = ret[i]
-      ret[i] = ret[j]
-      ret[j] = temp
-    }
+    ret.sort(() => Math.random() - 0.5);
+
     return ret
   }
 
@@ -122,31 +117,31 @@ export default class QuestionComponent extends Component {
     "Ygerne",
     "Yvain",
     this.persoInconnu
-    ]
+  ]
 
-    @action
-    validatePerso(params){
-      //disable all button
-      // this.disable = true
+  @action
+  validatePerso(params) {
+    //disable all button
+    // this.disable = true
 
-      let result
-      let answerStyle
-        if (this.question.character == params.toElement.innerText) {
-          result = 1
-          answerStyle = "color: green"
-        }else{
-          result = 0
-          answerStyle = "color: red"
-        }
-        
-        //call parent to give him result
-        this.updateScore(result)
-        this.updateResponse(params.toElement.innerText, answerStyle, (result != 0 ? "Vrai" : "Faux"))
-        this.isFinished = this.checkIfQuizzFinished()
-        if (!this.isFinished) {
-          this.nbQuestion++
-          this.updateQuestionComponent()
-        }
-
+    let result
+    let answerStyle
+    if (this.question.character == params.toElement.innerText) {
+      result = 1
+      answerStyle = "color: green"
+    } else {
+      result = 0
+      answerStyle = "color: red"
     }
+
+    //call parent to give him result
+    this.updateScore(result)
+    this.updateResponse(params.toElement.innerText, answerStyle, (result != 0 ? "Vrai" : "Faux"))
+    this.isFinished = this.checkIfQuizzFinished()
+    if (!this.isFinished) {
+      this.nbQuestion++
+      this.updateQuestionComponent()
+    }
+
+  }
 }
